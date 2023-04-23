@@ -1,5 +1,6 @@
 import math
 from concurrent.futures import ThreadPoolExecutor
+from typing import Tuple
 
 import aiohttp
 from fastapi_sqlalchemy import db
@@ -13,7 +14,7 @@ thread_pool = ThreadPoolExecutor()
 settings = get_settings()
 
 
-async def get_lat_lon(city_name: str) -> tuple[float, float] | None:
+async def get_lat_lon(city_name: str) -> tuple[None, None] | tuple[float, float]:
     """
     Возвращает долготу и широту переданного города
     :param city_name: Название города
@@ -24,8 +25,8 @@ async def get_lat_lon(city_name: str) -> tuple[float, float] | None:
     async with aiohttp.request("GET", url, params={"format": "json", "city": city_name, "limit": 1}) as r:
         status_code = r.status
         result = await r.json()
-    if status_code != 200:
-        return None
+    if status_code != 200 or len(result) == 0:
+        return None, None
     city = result[0]
     return float(city["lon"]), float(city["lat"])
 
@@ -57,6 +58,6 @@ async def get_two_nearest(lat: float, lon: float) -> list[City]:
         ):
             min_city2 = min_city1
             min_city1 = city
-        elif cur_dist < haversine_distance(lat, lon, min_city2.lat, min_city2.lon):
+        elif cur_dist < haversine_distance(lat, lon, min_city2.lat, min_city2.lon) and min_city1 != city:
             min_city2 = city
     return [min_city1, min_city2]

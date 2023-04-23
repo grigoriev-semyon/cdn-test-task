@@ -10,8 +10,8 @@ def test_create(client, dbsession):
     assert resp.status_code == 200
     assert resp.json()
     assert resp.json()["name"] == "Moscow"
-    assert int(resp.json()["lat"]) == 37
-    assert int(resp.json()["lon"]) == 55
+    assert int(resp.json()["lat"]) == 55
+    assert int(resp.json()["lon"]) == 37
     dbsession.query(City).filter(City.id == resp.json()["id"]).delete()
 
 
@@ -51,7 +51,7 @@ def test_get_nearest(client, dbsession):
     dbsession.add(city2 := City(name=random_string(), lat=0.5, lon=0.5))
     dbsession.add(city3 := City(name=random_string(), lat=2.1, lon=2.1))
     dbsession.commit()
-    resp = client.post("/city/nearest", json={"lat": 0.3, "lon": 0.3})
+    resp = client.get("/city", params={"lat": 0.3, "lon": 0.3})
     assert resp.status_code == 200
     assert {"id": city1.id, "name": city1.name, "lat": float(city1.lat), "lon":float(city1.lon)} in resp.json()
     assert {"id": city2.id, "name": city2.name, "lat": float(city2.lat), "lon":float(city2.lon)} in resp.json()
