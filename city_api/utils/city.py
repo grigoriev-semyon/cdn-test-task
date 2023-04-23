@@ -1,5 +1,4 @@
 import math
-from concurrent.futures import ThreadPoolExecutor
 
 import aiohttp
 from fastapi_sqlalchemy import db
@@ -7,8 +6,6 @@ from fastapi_sqlalchemy import db
 from city_api.models.db import City
 from city_api.settings import get_settings
 
-
-thread_pool = ThreadPoolExecutor()
 
 settings = get_settings()
 
