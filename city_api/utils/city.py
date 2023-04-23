@@ -1,6 +1,5 @@
 import math
 from concurrent.futures import ThreadPoolExecutor
-from typing import Tuple
 
 import aiohttp
 from fastapi_sqlalchemy import db
@@ -32,6 +31,14 @@ async def get_lat_lon(city_name: str) -> tuple[None, None] | tuple[float, float]
 
 
 def haversine_distance(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
+    """
+    Вычисляет расстояние на сфере между двумя точками
+    :param lat1: Широта первой точки
+    :param lon1: Долгота первой точки
+    :param lat2: Широта второй точки
+    :param lon2: Долгота второй точки
+    :return: float - расстояние на сфере
+    """
     lat1_rad = math.radians(lat1)
     lon1_rad = math.radians(lon1)
     lat2_rad = math.radians(lat2)
@@ -49,6 +56,12 @@ def haversine_distance(lat1: float, lon1: float, lat2: float, lon2: float) -> fl
 
 
 async def get_two_nearest(lat: float, lon: float) -> list[City]:
+    """
+    Возвращает два ближайших города к заданной точке
+    :param lat: Широта заданной точки
+    :param lon: Долгота заданной точки
+    :return: list[City] - список из двух ближайших городов
+    """
     cities: list[City] = db.session.query(City).all()
     min_city1: City = cities[0] if len(cities) else None
     min_city2: City = cities[1] if len(cities) > 1 else None

@@ -8,9 +8,9 @@ venv:
 	python3.11 -m venv venv
 
 format:
-	autoflake -r --in-place --remove-all-unused-imports ./country_api
-	isort ./country_api
-	black ./country_api
+	autoflake -r --in-place --remove-all-unused-imports ./city_api
+	isort ./city_api
+	black ./city_api
 
 db:
 	docker run -d -p 5432:5432 -e POSTGRES_HOST_AUTH_METHOD=trust --name db-country_api postgres:latest

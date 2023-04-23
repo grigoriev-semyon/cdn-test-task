@@ -1,5 +1,3 @@
-
-
 from fastapi import APIRouter, Query
 from fastapi_sqlalchemy import db
 from pydantic import parse_obj_as
