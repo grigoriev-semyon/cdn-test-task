@@ -16,7 +16,6 @@ async def get_lat_lon(city_name: str) -> tuple[None, None] | tuple[float, float]
     :param city_name: Название города
     :return: tuple(долгота, широта)
     """
-    backslash = '\\'
     url = f"https://nominatim.openstreetmap.org"
     async with aiohttp.request("GET", url, params={"format": "json", "city": city_name, "limit": 1}) as r:
         status_code = r.status
