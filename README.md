@@ -12,6 +12,7 @@
     foo@bar:~$ make configure
     foo@bar:~$ make db
     foo@bar:~$ make env
+    foo@bar:~$ make migrate
     foo@bar:~$ make run
     ```
 
