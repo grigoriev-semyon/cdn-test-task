@@ -1,5 +1,4 @@
 alembic
-auth-lib-profcomff[fastapi]
 fastapi
 fastapi-sqlalchemy
 gunicorn
