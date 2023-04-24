@@ -13,8 +13,10 @@ settings = get_settings()
 async def get_lat_lon(city_name: str) -> tuple[None, None] | tuple[float, float]:
     """
     Возвращает долготу и широту переданного города
+
     :param city_name: Название города
-    :return: tuple(долгота, широта)
+
+    :return: `tuple(долгота, широта)`
     """
     url = f"https://nominatim.openstreetmap.org"
     async with aiohttp.request("GET", url, params={"format": "json", "city": city_name, "limit": 1}) as r:
@@ -29,10 +31,15 @@ async def get_lat_lon(city_name: str) -> tuple[None, None] | tuple[float, float]
 def haversine_distance(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
     """
     Вычисляет расстояние на сфере между двумя точками
+
     :param lat1: Широта первой точки
+
     :param lon1: Долгота первой точки
+
     :param lat2: Широта второй точки
+
     :param lon2: Долгота второй точки
+
     :return: float - расстояние на сфере
     """
     lat1_rad = math.radians(lat1)
@@ -54,8 +61,11 @@ def haversine_distance(lat1: float, lon1: float, lat2: float, lon2: float) -> fl
 async def get_two_nearest(lat: float, lon: float) -> list[City]:
     """
     Возвращает два ближайших города к заданной точке
+
     :param lat: Широта заданной точки
+
     :param lon: Долгота заданной точки
+
     :return: list[City] - список из двух ближайших городов
     """
     cities: list[City] = db.session.query(City).all()

@@ -15,7 +15,9 @@ city = APIRouter(prefix="/city", tags=["City"])
 async def add_city(city_inp: CityPost) -> CityGet:
     """
     Добавить город по имени, координаты добавляются автоматически
+
     :param city_inp: Модель города
+
     :return: CityGet - созданный город
     """
     lon, lat = await get_lat_lon(city_inp.name)
@@ -30,7 +32,9 @@ async def add_city(city_inp: CityPost) -> CityGet:
 async def get_city(id: int) -> CityGet:
     """
     Получить город по айди
+
     :param id: Айди города
+
     :return: CityGet - полученный город
     """
     city = db.session.query(City).get(id)
@@ -43,8 +47,11 @@ async def get_city(id: int) -> CityGet:
 async def get_cities(lat: float = Query(default=None), lon: float = Query(default=None)) -> list[CityGet]:
     """
     Если переданы lat/lon, то вернет два ближайших города, в ином случае весь список
+
     :param lat: Широта
-    :param lon: Долготвв
+
+    :param lon: Долгота
+
     :return: list[CityGet]
     """
     if lat is not None and lon is not None:
@@ -56,7 +63,9 @@ async def get_cities(lat: float = Query(default=None), lon: float = Query(defaul
 async def delete_city(id: int) -> None:
     """
     Удалить город по айди
+
     :param id: айли удаляемого города
+
     :return: None
     """
     db.session.query(City).filter(City.id == id).delete()
