@@ -12,6 +12,12 @@ def test_create(client, dbsession):
     assert resp.json()["name"] == "Moscow"
     assert int(resp.json()["lat"]) == 55
     assert int(resp.json()["lon"]) == 37
+    city = dbsession.query(City).filter(City.id == resp.json()["id"]).one()
+    assert city
+    assert resp.json()["id"] == city.id
+    assert resp.json()["name"] == city.name
+    assert resp.json()["lat"] == float(city.lat)
+    assert resp.json()["lon"] == float(city.lon)
     dbsession.query(City).filter(City.id == resp.json()["id"]).delete()
 
 
