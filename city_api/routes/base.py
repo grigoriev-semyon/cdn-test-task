@@ -9,10 +9,9 @@ from .city import city
 
 settings = get_settings()
 app = FastAPI(
-    title='тестовое ',
-    description='тестовое',
+    title='Сервис горододв',
+    description='Сервис для хранения информации о городах и работы с ней',
     version=__version__,
-    # Отключаем нелокальную документацию
     root_path=settings.ROOT_PATH if __version__ != 'dev' else '/',
     docs_url=None if __version__ != 'dev' else '/docs',
     redoc_url=None,

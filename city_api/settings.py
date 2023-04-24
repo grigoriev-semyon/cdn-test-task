@@ -1,3 +1,4 @@
+import os
 from functools import lru_cache
 
 from pydantic import BaseSettings, PostgresDsn
@@ -7,6 +8,7 @@ class Settings(BaseSettings):
     """Application settings"""
 
     DB_DSN: PostgresDsn
+    ROOT_PATH: str = '/' + os.getenv("APP_NAME", "")
 
     CORS_ALLOW_ORIGINS: list[str] = ['*']
     CORS_ALLOW_CREDENTIALS: bool = True
